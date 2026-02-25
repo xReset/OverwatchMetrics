@@ -1,0 +1,37 @@
+name: Daily Overwatch Stats Scraper
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # 2:00 AM UTC daily
+  workflow_dispatch:  # Allow manual trigger from GitHub UI
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install scraper dependencies
+        run: |
+          cd scraper
+          npm install
+          
+      - name: Run scraper with deduplication
+        run: |
+          cd scraper
+          node src/production-scraper.js
+          
+      - name: Commit and push if changes detected
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add backend/data/real-overwatch-data.json frontend/public/data/overwatch-stats.json
+          git diff --staged --quiet || git commit -m "chore: update Overwatch stats snapshot [skip ci]"
+          git push

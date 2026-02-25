@@ -77,19 +77,16 @@ export function Dashboard() {
 
         <div className="flex gap-4 justify-center flex-wrap">
           <div className="flex gap-2">
-            {ROLES.map(role => (
-              <button
-                key={role}
-                onClick={() => setSelectedRole(role)}
-                className={`px-4 py-2 rounded-md font-medium transition-colors ${
-                  selectedRole === role
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
-                }`}
-              >
-                {role}
-              </button>
-            ))}
+            <button
+              onClick={() => {
+                const currentIndex = ROLES.indexOf(selectedRole);
+                const nextIndex = (currentIndex + 1) % ROLES.length;
+                setSelectedRole(ROLES[nextIndex]);
+              }}
+              className="px-4 py-2 rounded-md font-medium transition-colors bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              Role: {selectedRole}
+            </button>
           </div>
           
           <div className="flex gap-2">
