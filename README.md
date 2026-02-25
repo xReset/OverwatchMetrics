@@ -1,61 +1,87 @@
-# Overwatch 2 Stats Dashboard
+# Overwatch 2 Statistics Dashboard
 
-A clean, local-first dashboard for tracking Overwatch 2 hero performance powered by real data from Blizzard's official stats page.
+A local-first dashboard for tracking Overwatch 2 hero performance metrics sourced directly from Blizzard's official statistics API.
 
-## What it does
+## Overview
 
-Ever wonder which heroes are actually dominating the meta? This scrapes 100% real Overwatch 2 statistics directly from Blizzard's website and displays them in a beautiful, interactive dashboard.
+This application provides a clean interface for analyzing Overwatch 2 hero statistics across different game modes, regions, tiers, and input types. It maintains a local archive of data snapshots for historical comparison and trend analysis.
 
-- Real-time data - No mock numbers, no hallucinations, just pure Blizzard stats
-- Smart visualizations - Clean heatmap grid with sortable columns and search
-- All the filters - Mode, tier, region, platform, you name it
-- Official hero portraits - Real Blizzard artwork, not generic icons
-- Responsive design - Works great on desktop and mobile
+## Architecture
 
-## How it works
+- **Frontend**: Astro + React + TailwindCSS
+- **Backend**: Node.js + Express
+- **Data Source**: Blizzard Overwatch 2 API via Puppeteer
+- **Storage**: Local JSON files with snapshot management
+- **Visualization**: Custom heatmap grid with sortable columns
 
-1. Scraper hits Blizzard's API every day (or whenever you run it)
-2. Backend serves up the data via a clean REST API  
-3. Frontend displays everything in a gorgeous, interactive interface
+## Features
 
-The magic? It compares data over time so you can see which heroes are climbing the meta and which ones are falling off.
+- Interactive heatmap grid with 50+ heroes
+- Sortable columns (hero name, role, current metrics, changes)
+- Search functionality for hero filtering
+- Role-based filtering (Tank, Damage, Support)
+- Metric toggle (pick rate / win rate)
+- Pagination for optimal performance
+- Official Blizzard hero portraits
+- Responsive design for desktop and mobile
 
-## Quick start
+## Data Sources
+
+Statistics are scraped from Blizzard's official Overwatch 2 statistics page:
+- Competitive and Quick Play modes
+- All regions (Americas, Europe, Asia)
+- All skill tiers (Bronze through Grandmaster)
+- PC and Console input types
+
+## Quick Start
 
 ```bash
-# Install everything
+# Install dependencies
 npm run install-all
 
-# Start the backend
+# Start backend server
 npm run dev:backend
 
-# Start the frontend (in another terminal)
+# Start frontend development server
 npm run dev:frontend
 ```
 
-Visit `http://localhost:4321` and you're good to go!
+Access the dashboard at `http://localhost:4321`
 
-## Features I'm proud of
+## Data Collection
 
-- Heatmap Grid - My favorite! Sortable, searchable, with real hero portraits
-- Metric Toggle - Switch between pick rate and win rate instantly  
-- Role Filtering - Focus on Tanks, Damage, or Support heroes
-- Smart Pagination - Handles all 50 heroes without overwhelming you
-- Change Tracking - Shows who's rising and falling in the meta
+Run the scraper to collect current statistics:
 
-## Tech stuff
+```bash
+npm run scrape
+```
 
-- Frontend: Astro + React + TailwindCSS (no bloated frameworks)
-- Backend: Node.js + Express (simple, fast)
-- Data: Real Blizzard API calls via Puppeteer
-- Storage: Local JSON files (no complex database needed)
+The scraper fetches all filter combinations and stores them as timestamped snapshots for historical comparison.
 
-## Why I built this
+## API Endpoints
 
-I was tired of seeing fake Overwatch stats everywhere. Every site had "mock data" or numbers that didn't match reality. So I built something that pulls directly from the source - Blizzard's own API.
+- `GET /api/snapshots` - List available data snapshots
+- `GET /api/compare` - Get comparison data for visualization
+- `GET /api/top` - Get top heroes by metric
+- `GET /api/health` - System health check
 
-Now I can see exactly what's happening in the meta, track trends over time, and make better hero choices.
+## Project Structure
 
----
+```
+├── frontend/          # Astro + React application
+├── backend/           # Express API server
+├── scraper/           # Data collection scripts
+└── mockups/           # UI prototypes
+```
 
-Built with love for Overwatch players who care about real data
+## Configuration
+
+All configuration is handled through environment variables and local files. No external services or databases required.
+
+## Development
+
+The project uses a monorepo structure with shared TypeScript types and utilities. Each workspace can be developed independently.
+
+## License
+
+MIT
