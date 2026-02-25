@@ -26,6 +26,7 @@ export function Dashboard() {
   const [fadeOut, setFadeOut] = useState(false);
 
   const loadData = async () => {
+    console.log('[Dashboard] Loading data with filters:', filters);
     setFadeOut(true);
     await new Promise(resolve => setTimeout(resolve, 200));
     
@@ -37,11 +38,14 @@ export function Dashboard() {
         fetchTopHeroes({ ...filters, metric: 'win_rate', limit: 10 })
       ]);
 
+      console.log('[Dashboard] Loaded comparison data:', comparison.length, 'heroes');
+      console.log('[Dashboard] Top pick rate hero:', pickRate.top[0]?.hero, pickRate.top[0]?.pick_rate);
+      
       setComparisonData(comparison);
       setTopPickRate(pickRate.top);
       setTopWinRate(winRate.top);
     } catch (error) {
-      console.error('Failed to load data:', error);
+      console.error('[Dashboard] Failed to load data:', error);
     } finally {
       setIsLoading(false);
       setFadeOut(false);
