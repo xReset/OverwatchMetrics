@@ -17,6 +17,7 @@ export function HeatmapGrid({ data, metric }: HeatmapGridProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortColumn, setSortColumn] = useState<SortColumn>('current');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+  const [roleFilter, setRoleFilter] = useState<string | null>(null);
   const rowsPerPage = 20;
 
   const processedData = useMemo(() => {
@@ -44,10 +45,12 @@ export function HeatmapGrid({ data, metric }: HeatmapGridProps) {
   }, [data, metric]);
 
   const filteredData = useMemo(() => {
-    return processedData.filter(item =>
-      item.hero.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [processedData, searchTerm]);
+    return processedData.filter(item => {
+      const matchesSearch = item.hero.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesRole = !roleFilter || item.role === roleFilter;
+      return matchesSearch && matchesRole;
+    });
+  }, [processedData, searchTerm, roleFilter]);
 
   const sortedData = useMemo(() => {
     const sorted = [...filteredData];
@@ -95,13 +98,27 @@ export function HeatmapGrid({ data, metric }: HeatmapGridProps) {
   const totalPages = Math.ceil(sortedData.length / rowsPerPage);
 
   const handleSort = (column: SortColumn) => {
-    if (sortColumn === column) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    if (column === 'role') {
+      // Cycle through role filters: null → Tank → Damage → Support → null
+      if (roleFilter === null) {
+        setRoleFilter('Tank');
+      } else if (roleFilter === 'Tank') {
+        setRoleFilter('Damage');
+      } else if (roleFilter === 'Damage') {
+        setRoleFilter('Support');
+      } else {
+        setRoleFilter(null);
+      }
+      setCurrentPage(1);
     } else {
-      setSortColumn(column);
-      setSortDirection('desc');
+      if (sortColumn === column) {
+        setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+      } else {
+        setSortColumn(column);
+        setSortDirection('desc');
+      }
+      setCurrentPage(1);
     }
-    setCurrentPage(1);
   };
 
   const getChangeClass = (change: number) => {
@@ -120,6 +137,12 @@ export function HeatmapGrid({ data, metric }: HeatmapGridProps) {
   };
 
   const getSortIcon = (column: SortColumn) => {
+    if (column === 'role') {
+      if (roleFilter === 'Tank') return <span className="text-primary ml-1">(Tank)</span>;
+      if (roleFilter === 'Damage') return <span className="text-primary ml-1">(Damage)</span>;
+      if (roleFilter === 'Support') return <span className="text-primary ml-1">(Support)</span>;
+      return <span className="text-muted-foreground ml-1">(All)</span>;
+    }
     if (sortColumn !== column) {
       return <span className="text-muted-foreground ml-1">↕</span>;
     }

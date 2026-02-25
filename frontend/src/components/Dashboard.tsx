@@ -4,9 +4,6 @@ import { HeatmapGrid } from './HeatmapGrid';
 import { TopXPanel } from './TopXPanel';
 import { Card, CardHeader, CardTitle, CardContent } from './ui/Card';
 import { fetchComparisonData, fetchTopHeroes, type ComparisonData, type HeroStat } from '@/lib/api';
-import { filterHeroesByRole, type HeroRole } from '@/lib/heroRoles';
-
-const ROLES: Array<HeroRole | 'All'> = ['All', 'Tank', 'Damage', 'Support'];
 const METRICS: Array<{ value: 'pick_rate' | 'win_rate'; label: string }> = [
   { value: 'pick_rate', label: 'Pick Rate' },
   { value: 'win_rate', label: 'Win Rate' }
@@ -21,7 +18,6 @@ export function Dashboard() {
     map: 'all-maps'
   });
 
-  const [selectedRole, setSelectedRole] = useState<HeroRole | 'All'>('All');
   const [selectedMetric, setSelectedMetric] = useState<'pick_rate' | 'win_rate'>('pick_rate');
   const [comparisonData, setComparisonData] = useState<ComparisonData[]>([]);
   const [topPickRate, setTopPickRate] = useState<HeroStat[]>([]);
@@ -56,9 +52,7 @@ export function Dashboard() {
     loadData();
   }, [filters]);
 
-  const filteredComparison = filterHeroesByRole(comparisonData, selectedRole);
-  const filteredPickRate = filterHeroesByRole(topPickRate, selectedRole);
-  const filteredWinRate = filterHeroesByRole(topWinRate, selectedRole);
+  // Role filtering is now handled in HeatmapGrid component via Role column click
 
   return (
     <div className="min-h-screen bg-background">
@@ -74,19 +68,6 @@ export function Dashboard() {
         />
 
         <div className="flex gap-4 justify-center flex-wrap">
-          <div className="flex gap-2">
-            <button
-              onClick={() => {
-                const currentIndex = ROLES.indexOf(selectedRole);
-                const nextIndex = (currentIndex + 1) % ROLES.length;
-                setSelectedRole(ROLES[nextIndex]);
-              }}
-              className="px-4 py-2 rounded-md font-medium transition-colors bg-primary text-primary-foreground hover:bg-primary/90"
-            >
-              Role: {selectedRole}
-            </button>
-          </div>
-          
           <div className="flex gap-2">
             {METRICS.map(metric => (
               <button
@@ -118,19 +99,19 @@ export function Dashboard() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <HeatmapGrid data={filteredComparison} metric={selectedMetric} />
+                  <HeatmapGrid data={comparisonData} metric={selectedMetric} />
                 </CardContent>
               </Card>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                 <TopXPanel
                   title="Top 10 Pick Rate"
-                  heroes={filteredPickRate}
+                  heroes={topPickRate}
                   metric="pick_rate"
                 />
                 <TopXPanel
                   title="Top 10 Win Rate"
-                  heroes={filteredWinRate}
+                  heroes={topWinRate}
                   metric="win_rate"
                 />
               </div>
