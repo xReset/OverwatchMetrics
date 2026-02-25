@@ -7,12 +7,12 @@ export interface FilterState {
   tier: string;
   region: string;
   input: string;
+  map: string;
 }
 
 interface FilterPanelProps {
   filters: FilterState;
   onFilterChange: (filters: FilterState) => void;
-  onAdvancedClick: () => void;
 }
 
 const MODES = [
@@ -42,7 +42,38 @@ const INPUTS = [
   { value: 'Console', label: 'Console' }
 ];
 
-export function FilterPanel({ filters, onFilterChange, onAdvancedClick }: FilterPanelProps) {
+const MAPS = [
+  { value: 'all-maps', label: 'All Maps' },
+  { value: 'busan', label: 'Busan' },
+  { value: 'ilios', label: 'Ilios' },
+  { value: 'lijiang-tower', label: 'Lijiang Tower' },
+  { value: 'nepal', label: 'Nepal' },
+  { value: 'oasis', label: 'Oasis' },
+  { value: 'antarctic-peninsula', label: 'Antarctic Peninsula' },
+  { value: 'samoa', label: 'Samoa' },
+  { value: 'dorado', label: 'Dorado' },
+  { value: 'havana', label: 'Havana' },
+  { value: 'junkertown', label: 'Junkertown' },
+  { value: 'rialto', label: 'Rialto' },
+  { value: 'route-66', label: 'Route 66' },
+  { value: 'shambali-monastery', label: 'Shambali Monastery' },
+  { value: 'circuit-royal', label: 'Circuit Royal' },
+  { value: 'blizzard-world', label: 'Blizzard World' },
+  { value: 'eichenwalde', label: 'Eichenwalde' },
+  { value: 'hollywood', label: 'Hollywood' },
+  { value: 'kings-row', label: "King's Row" },
+  { value: 'midtown', label: 'Midtown' },
+  { value: 'numbani', label: 'Numbani' },
+  { value: 'paraiso', label: 'Paraíso' },
+  { value: 'colosseo', label: 'Colosseo' },
+  { value: 'esperanca', label: 'Esperança' },
+  { value: 'new-queen-street', label: 'New Queen Street' },
+  { value: 'runasapi', label: 'Runasapi' },
+  { value: 'new-junk-city', label: 'New Junk City' },
+  { value: 'suravasa', label: 'Suravasa' }
+];
+
+export function FilterPanel({ filters, onFilterChange }: FilterPanelProps) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
@@ -117,11 +148,19 @@ export function FilterPanel({ filters, onFilterChange, onAdvancedClick }: Filter
             ))}
           </Select>
         </div>
-      </div>
 
-      <Button variant="outline" onClick={onAdvancedClick}>
-        Advanced →
-      </Button>
+        <div className="flex flex-col gap-1">
+          <label className="text-sm font-medium text-muted-foreground">Map</label>
+          <Select
+            value={filters.map}
+            onChange={(e) => handleChange('map', e.target.value)}
+          >
+            {MAPS.map(map => (
+              <option key={map.value} value={map.value}>{map.label}</option>
+            ))}
+          </Select>
+        </div>
+      </div>
     </div>
   );
 }

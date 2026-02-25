@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { FilterPanel, type FilterState } from './FilterPanel';
 import { HeatmapGrid } from './HeatmapGrid';
 import { TopXPanel } from './TopXPanel';
-import { AdvancedDrawer } from './AdvancedDrawer';
 import { Card, CardHeader, CardTitle, CardContent } from './ui/Card';
 import { fetchComparisonData, fetchTopHeroes, type ComparisonData, type HeroStat } from '@/lib/api';
 import { filterHeroesByRole, type HeroRole } from '@/lib/heroRoles';
@@ -18,7 +17,8 @@ export function Dashboard() {
     mode: 'competitive',
     tier: 'All',
     region: 'Americas',
-    input: 'PC'
+    input: 'PC',
+    map: 'all-maps'
   });
 
   const [selectedRole, setSelectedRole] = useState<HeroRole | 'All'>('All');
@@ -26,7 +26,6 @@ export function Dashboard() {
   const [comparisonData, setComparisonData] = useState<ComparisonData[]>([]);
   const [topPickRate, setTopPickRate] = useState<HeroStat[]>([]);
   const [topWinRate, setTopWinRate] = useState<HeroStat[]>([]);
-  const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
 
@@ -72,7 +71,6 @@ export function Dashboard() {
         <FilterPanel
           filters={filters}
           onFilterChange={setFilters}
-          onAdvancedClick={() => setIsAdvancedOpen(true)}
         />
 
         <div className="flex gap-4 justify-center flex-wrap">
@@ -139,11 +137,6 @@ export function Dashboard() {
             </>
           )}
         </div>
-
-        <AdvancedDrawer
-          isOpen={isAdvancedOpen}
-          onClose={() => setIsAdvancedOpen(false)}
-        />
       </div>
     </div>
   );

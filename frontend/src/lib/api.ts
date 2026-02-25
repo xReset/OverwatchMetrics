@@ -4,6 +4,7 @@ export interface Snapshot {
   input: string;
   region: string;
   tier: string;
+  map?: string;
   heroes: HeroStat[];
 }
 
@@ -51,12 +52,14 @@ function findMatchingSnapshot(snapshots: Snapshot[], params: {
   input: string;
   region: string;
   tier: string;
+  map?: string;
 }): Snapshot | null {
   return snapshots.find(s => 
     s.mode === params.mode &&
     s.input === params.input &&
     s.region === params.region &&
-    s.tier === params.tier
+    s.tier === params.tier &&
+    (!params.map || s.map === params.map)
   ) || snapshots[0];
 }
 
@@ -65,6 +68,7 @@ export async function fetchComparisonData(params: {
   input: string;
   region: string;
   tier: string;
+  map?: string;
 }): Promise<ComparisonData[]> {
   const snapshots = await loadStaticData();
   const snapshot = findMatchingSnapshot(snapshots, params);
@@ -93,6 +97,7 @@ export async function fetchTopHeroes(params: {
   tier: string;
   metric: 'pick_rate' | 'win_rate';
   limit?: number;
+  map?: string;
 }): Promise<TopHeroesData> {
   const snapshots = await loadStaticData();
   const snapshot = findMatchingSnapshot(snapshots, params);
