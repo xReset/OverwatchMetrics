@@ -1,0 +1,79 @@
+[
+  {
+    "method": "GET",
+    "url": "https://overwatch.blizzard.com/en-us/rates/?input=PC&map=all-maps&region=Americas&role=All&rq=1&tier=All",
+    "headers": {
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"121\", \"Not A(Brand\";v=\"99\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Windows\""
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://static.playoverwatch.com/rates-ce6bd5e4352b22534f02.js",
+    "headers": {
+      "sec-ch-ua": "\"Chromium\";v=\"121\", \"Not A(Brand\";v=\"99\"",
+      "referer": "https://overwatch.blizzard.com/",
+      "sec-ch-ua-mobile": "?0",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+      "sec-ch-ua-platform": "\"Windows\""
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://static.playoverwatch.com/rates-d2ef01b4d0.css",
+    "headers": {
+      "sec-ch-ua": "\"Chromium\";v=\"121\", \"Not A(Brand\";v=\"99\"",
+      "referer": "https://overwatch.blizzard.com/",
+      "sec-ch-ua-mobile": "?0",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+      "sec-ch-ua-platform": "\"Windows\""
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://navbar.blizzard.com/base-api/v1/en-us/nav?entry=ow2",
+    "headers": {
+      "sec-ch-ua": "\"Chromium\";v=\"121\", \"Not A(Brand\";v=\"99\"",
+      "referer": "https://overwatch.blizzard.com/",
+      "sec-ch-ua-mobile": "?0",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+      "sec-ch-ua-platform": "\"Windows\""
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://navbar.blizzard.com/base-api/v1/en-us/navfooter?titleId=5272175&content=blizzard&cookiesUrl=https%3A%2F%2Fwww.blizzard.com%2Fcookies&entry=main",
+    "headers": {
+      "sec-ch-ua": "\"Chromium\";v=\"121\", \"Not A(Brand\";v=\"99\"",
+      "referer": "https://overwatch.blizzard.com/",
+      "sec-ch-ua-mobile": "?0",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+      "sec-ch-ua-platform": "\"Windows\""
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://navbar.blizzard.com/base-api/v1/themes/nav?entry=light&formatted=true",
+    "headers": {
+      "sec-ch-ua": "\"Chromium\";v=\"121\", \"Not A(Brand\";v=\"99\"",
+      "referer": "https://overwatch.blizzard.com/",
+      "sec-ch-ua-mobile": "?0",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+      "sec-ch-ua-platform": "\"Windows\""
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://navbar.blizzard.com/base-api/v1/en-us/navfooter?titleId=5272175&content=blizzard&cookiesUrl=https%3A%2F%2Fwww.blizzard.com%2Fcookies&entry=main",
+    "headers": {
+      "sec-ch-ua": "\"Chromium\";v=\"121\", \"Not A(Brand\";v=\"99\"",
+      "referer": "https://overwatch.blizzard.com/",
+      "sec-ch-ua-mobile": "?0",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+      "sec-ch-ua-platform": "\"Windows\""
+    }
+  }
+]

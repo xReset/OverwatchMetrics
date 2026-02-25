@@ -37,18 +37,14 @@ let cachedData: Snapshot[] | null = null;
 
 async function loadStaticData(): Promise<Snapshot[]> {
   if (cachedData) {
-    console.log('[API] Using cached data:', cachedData.length, 'snapshots');
     return cachedData;
   }
   
-  console.log('[API] Loading data from /data/overwatch-stats.json');
   const response = await fetch('/data/overwatch-stats.json');
   if (!response.ok) {
     throw new Error('Failed to load statistics data');
   }
   const data: Snapshot[] = await response.json();
-  console.log('[API] Loaded', data.length, 'snapshots');
-  console.log('[API] Available maps:', [...new Set(data.map(s => s.map))].sort());
   cachedData = data;
   return data;
 }
@@ -60,8 +56,6 @@ function findMatchingSnapshot(snapshots: Snapshot[], params: {
   tier: string;
   map?: string;
 }): Snapshot | null {
-  console.log('[API] Finding snapshot with params:', params);
-  
   const matched = snapshots.find(s => 
     s.mode === params.mode &&
     s.input === params.input &&
@@ -69,16 +63,6 @@ function findMatchingSnapshot(snapshots: Snapshot[], params: {
     s.tier === params.tier &&
     (!params.map || s.map === params.map)
   );
-  
-  if (matched) {
-    console.log('[API] Found matching snapshot:', {
-      map: matched.map,
-      timestamp: matched.timestamp,
-      heroCount: matched.heroes.length
-    });
-  } else {
-    console.warn('[API] No match found, using fallback:', snapshots[0]?.map);
-  }
   
   return matched || snapshots[0];
 }

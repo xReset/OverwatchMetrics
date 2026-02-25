@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Option 1: Scatter Plot with Quadrant Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #f1f5f9;
+        }
+        .subtitle {
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+        .card {
+            background: #1e293b;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #0f172a;
+            border-radius: 0.5rem;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+        .info-box {
+            background: #334155;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .info-box h3 {
+            color: #fbbf24;
+            margin-bottom: 0.5rem;
+        }
+        .quadrant-labels {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .quadrant {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 2px solid;
+        }
+        .quadrant.meta {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+        }
+        .quadrant.hidden {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .quadrant.popular {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+        }
+        .quadrant.under {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Option 1: Interactive Scatter Plot</h1>
+        <p class="subtitle">Pick Rate vs Win Rate with Quadrant Analysis</p>
+        
+        <div class="info-box">
+            <h3>📊 How to Read This Graph</h3>
+            <p>Each point represents a hero. Position shows their pick rate (X-axis) and win rate (Y-axis). Color indicates their role.</p>
+            <div class="quadrant-labels">
+                <div class="quadrant meta">
+                    <strong>Meta Heroes</strong><br>
+                    High pick, high win - dominant in current meta
+                </div>
+                <div class="quadrant hidden">
+                    <strong>Hidden Gems</strong><br>
+                    Low pick, high win - underutilized strong picks
+                </div>
+                <div class="quadrant popular">
+                    <strong>Popular but Weak</strong><br>
+                    High pick, low win - overrated or difficult
+                </div>
+                <div class="quadrant under">
+                    <strong>Underperformers</strong><br>
+                    Low pick, low win - need buffs or out of meta
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div id="chart"></div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FAA81A;"></div>
+                <span>Tank</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #E3191C;"></div>
+                <span>Damage</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FEF06E;"></div>
+                <span>Support</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample Overwatch hero data
+        const heroData = [
+            { name: 'Mizuki', role: 'Support', pickRate: 37.1, winRate: 53.4 },
+            { name: 'Jetpack Cat', role: 'Support', pickRate: 38.4, winRate: 52.3 },
+            { name: 'Emre', role: 'Damage', pickRate: 28.4, winRate: 47.1 },
+            { name: 'Domina', role: 'Tank', pickRate: 27.0, winRate: 51.1 },
+            { name: 'Anran', role: 'Damage', pickRate: 23.6, winRate: 50.3 },
+            { name: 'Moira', role: 'Support', pickRate: 27.1, winRate: 49.8 },
+            { name: 'Kiriko', role: 'Support', pickRate: 24.6, winRate: 46.0 },
+            { name: 'Juno', role: 'Support', pickRate: 20.1, winRate: 51.8 },
+            { name: 'Soldier: 76', role: 'Damage', pickRate: 20.6, winRate: 51.9 },
+            { name: 'Cassidy', role: 'Damage', pickRate: 19.6, winRate: 49.7 },
+            { name: 'Ana', role: 'Support', pickRate: 19.5, winRate: 46.5 },
+            { name: 'Mercy', role: 'Support', pickRate: 18.5, winRate: 49.5 },
+            { name: 'Reinhardt', role: 'Tank', pickRate: 11.9, winRate: 53.1 },
+            { name: 'Reaper', role: 'Damage', pickRate: 14.0, winRate: 52.5 },
+            { name: 'Bastion', role: 'Damage', pickRate: 14.0, winRate: 49.9 },
+            { name: 'Sojourn', role: 'Damage', pickRate: 11.8, winRate: 47.3 },
+            { name: 'Genji', role: 'Damage', pickRate: 10.1, winRate: 50.8 },
+            { name: 'Ashe', role: 'Damage', pickRate: 10.6, winRate: 51.2 },
+            { name: 'Orisa', role: 'Tank', pickRate: 9.6, winRate: 45.0 },
+            { name: 'D.Va', role: 'Tank', pickRate: 9.3, winRate: 49.5 },
+            { name: 'Sigma', role: 'Tank', pickRate: 9.2, winRate: 50.5 },
+            { name: 'Lucio', role: 'Support', pickRate: 9.0, winRate: 50.8 },
+            { name: 'Zenyatta', role: 'Support', pickRate: 8.6, winRate: 54.1 },
+            { name: 'Ramattra', role: 'Tank', pickRate: 8.6, winRate: 49.5 },
+            { name: 'Illari', role: 'Support', pickRate: 6.8, winRate: 54.4 },
+            { name: 'Junkrat', role: 'Damage', pickRate: 7.5, winRate: 47.5 },
+            { name: 'Tracer', role: 'Damage', pickRate: 6.7, winRate: 49.8 },
+            { name: 'Mei', role: 'Damage', pickRate: 6.7, winRate: 50.9 },
+            { name: 'Winston', role: 'Tank', pickRate: 6.9, winRate: 52.4 },
+            { name: 'Wuyang', role: 'Support', pickRate: 6.1, winRate: 50.9 },
+            { name: 'Lifeweaver', role: 'Support', pickRate: 6.3, winRate: 47.3 },
+            { name: 'Hanzo', role: 'Damage', pickRate: 6.4, winRate: 50.1 },
+            { name: 'Doomfist', role: 'Tank', pickRate: 6.0, winRate: 50.2 },
+            { name: 'Roadhog', role: 'Tank', pickRate: 5.8, winRate: 44.0 },
+            { name: 'Junker Queen', role: 'Tank', pickRate: 5.1, winRate: 53.7 },
+            { name: 'Mauga', role: 'Tank', pickRate: 4.7, winRate: 50.9 },
+            { name: 'Brigitte', role: 'Support', pickRate: 4.4, winRate: 50.7 },
+            { name: 'Echo', role: 'Damage', pickRate: 4.0, winRate: 50.1 },
+            { name: 'Freja', role: 'Damage', pickRate: 4.0, winRate: 44.6 },
+            { name: 'Widowmaker', role: 'Damage', pickRate: 3.9, winRate: 50.0 },
+            { name: 'Sombra', role: 'Damage', pickRate: 3.8, winRate: 47.7 },
+            { name: 'Venture', role: 'Damage', pickRate: 3.4, winRate: 50.2 },
+            { name: 'Pharah', role: 'Damage', pickRate: 3.2, winRate: 51.0 },
+            { name: 'Symmetra', role: 'Damage', pickRate: 3.1, winRate: 54.3 },
+            { name: 'Torbjorn', role: 'Damage', pickRate: 3.0, winRate: 54.1 },
+            { name: 'Wrecking Ball', role: 'Tank', pickRate: 2.8, winRate: 50.9 },
+            { name: 'Hazard', role: 'Tank', pickRate: 2.2, winRate: 48.1 }
+        ];
+
+        const roleColors = {
+            'Tank': '#FAA81A',
+            'Damage': '#E3191C',
+            'Support': '#FEF06E'
+        };
+
+        // Group data by role
+        const seriesData = ['Tank', 'Damage', 'Support'].map(role => ({
+            name: role,
+            data: heroData
+                .filter(h => h.role === role)
+                .map(h => ({
+                    x: h.pickRate,
+                    y: h.winRate,
+                    name: h.name,
+                    fillColor: roleColors[role]
+                }))
+        }));
+
+        const options = {
+            series: seriesData,
+            chart: {
+                height: 600,
+                type: 'scatter',
+                background: 'transparent',
+                toolbar: {
+                    show: true,
+                    tools: {
+                        download: true,
+                        zoom: true,
+                        zoomin: true,
+                        zoomout: true,
+                        pan: true,
+                        reset: true
+                    }
+                },
+                animations: {
+                    enabled: true,
+                    speed: 800
+                }
+            },
+            colors: ['#FAA81A', '#E3191C', '#FEF06E'],
+            xaxis: {
+                title: {
+                    text: 'Pick Rate (%)',
+                    style: {
+                        color: '#94a3b8',
+                        fontSize: '14px'
+                    }
+                },
+                min: 0,
+                max: 40,
+                tickAmount: 8,
+                labels: {
+                    style: {
+                        colors: '#94a3b8'
+                    }
+                },
+                axisBorder: {
+                    color: '#334155'
+                },
+                axisTicks: {
+                    color: '#334155'
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Win Rate (%)',
+                    style: {
+                        color: '#94a3b8',
+                        fontSize: '14px'
+                    }
+                },
+                min: 43,
+                max: 55,
+                tickAmount: 6,
+                labels: {
+                    style: {
+                        colors: '#94a3b8'
+                    }
+                },
+                axisBorder: {
+                    color: '#334155'
+                },
+                axisTicks: {
+                    color: '#334155'
+                }
+            },
+            grid: {
+                borderColor: '#334155',
+                strokeDashArray: 4,
+                xaxis: {
+                    lines: {
+                        show: true
+                    }
+                },
+                yaxis: {
+                    lines: {
+                        show: true
+                    }
+                }
+            },
+            markers: {
+                size: 8,
+                strokeWidth: 2,
+                strokeColors: '#1e293b',
+                hover: {
+                    size: 12
+                }
+            },
+            tooltip: {
+                theme: 'dark',
+                custom: function({ seriesIndex, dataPointIndex, w }) {
+                    const data = w.config.series[seriesIndex].data[dataPointIndex];
+                    return `
+                        <div style="padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px;">
+                            <div style="font-weight: bold; font-size: 14px; margin-bottom: 6px; color: #f1f5f9;">${data.name}</div>
+                            <div style="font-size: 12px; color: #94a3b8;">Pick Rate: <strong style="color: #e2e8f0;">${data.x.toFixed(1)}%</strong></div>
+                            <div style="font-size: 12px; color: #94a3b8;">Win Rate: <strong style="color: #e2e8f0;">${data.y.toFixed(1)}%</strong></div>
+                            <div style="font-size: 11px; margin-top: 4px; color: #64748b;">Role: ${w.config.series[seriesIndex].name}</div>
+                        </div>
+                    `;
+                }
+            },
+            legend: {
+                show: false
+            },
+            annotations: {
+                xaxis: [{
+                    x: 20,
+                    borderColor: '#64748b',
+                    strokeDashArray: 8,
+                    label: {
+                        text: 'Average Pick Rate',
+                        style: {
+                            color: '#94a3b8',
+                            background: '#1e293b'
+                        }
+                    }
+                }],
+                yaxis: [{
+                    y: 50,
+                    borderColor: '#64748b',
+                    strokeDashArray: 8,
+                    label: {
+                        text: '50% Win Rate',
+                        style: {
+                            color: '#94a3b8',
+                            background: '#1e293b'
+                        }
+                    }
+                }]
+            }
+        };
+
+        const chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    </script>
+</body>
+</html>

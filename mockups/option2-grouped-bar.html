@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Option 2: Grouped Bar Chart with Tabs</title>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #f1f5f9;
+        }
+        .subtitle {
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+        .card {
+            background: #1e293b;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 0.5rem;
+        }
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border-radius: 0.5rem 0.5rem 0 0;
+            transition: all 0.2s;
+        }
+        .tab:hover {
+            background: #334155;
+            color: #e2e8f0;
+        }
+        .tab.active {
+            background: #3b82f6;
+            color: #fff;
+        }
+        .info-box {
+            background: #334155;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .info-box h3 {
+            color: #fbbf24;
+            margin-bottom: 0.5rem;
+        }
+        .legend {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #0f172a;
+            border-radius: 0.5rem;
+            justify-content: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Option 2: Grouped Bar Chart</h1>
+        <p class="subtitle">Before/After Comparison with Multiple Views</p>
+        
+        <div class="info-box">
+            <h3>📊 How to Read This Graph</h3>
+            <p>Each hero has two bars: Previous (gray) and Current (colored). Color indicates change direction: Green = improved, Red = declined, Gray = stable. Switch tabs to see different hero groupings.</p>
+        </div>
+
+        <div class="card">
+            <div class="tabs">
+                <button class="tab active" onclick="switchView('top')">Top 15 Performers</button>
+                <button class="tab" onclick="switchView('gainers')">Biggest Gainers</button>
+                <button class="tab" onclick="switchView('losers')">Biggest Losers</button>
+            </div>
+            <div id="chart"></div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #64748b;"></div>
+                <span>Previous Period</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #22c55e;"></div>
+                <span>Improved</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ef4444;"></div>
+                <span>Declined</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #94a3b8;"></div>
+                <span>Stable</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample hero data with before/after
+        const heroData = [
+            { name: 'Jetpack Cat', prev: 35.2, curr: 38.4, change: 3.2 },
+            { name: 'Mizuki', prev: 34.5, curr: 37.1, change: 2.6 },
+            { name: 'Emre', prev: 26.8, curr: 28.4, change: 1.6 },
+            { name: 'Moira', prev: 25.9, curr: 27.1, change: 1.2 },
+            { name: 'Domina', prev: 25.5, curr: 27.0, change: 1.5 },
+            { name: 'Kiriko', prev: 23.8, curr: 24.6, change: 0.8 },
+            { name: 'Anran', prev: 22.1, curr: 23.6, change: 1.5 },
+            { name: 'Soldier: 76', prev: 21.4, curr: 20.6, change: -0.8 },
+            { name: 'Juno', prev: 19.5, curr: 20.1, change: 0.6 },
+            { name: 'Cassidy', prev: 20.2, curr: 19.6, change: -0.6 },
+            { name: 'Ana', prev: 18.9, curr: 19.5, change: 0.6 },
+            { name: 'Mercy', prev: 19.1, curr: 18.5, change: -0.6 },
+            { name: 'Reaper', prev: 12.8, curr: 14.0, change: 1.2 },
+            { name: 'Bastion', prev: 12.5, curr: 14.0, change: 1.5 },
+            { name: 'Cassidy', prev: 14.2, curr: 13.6, change: -0.6 },
+            { name: 'Reinhardt', prev: 10.5, curr: 11.9, change: 1.4 },
+            { name: 'Sojourn', prev: 13.2, curr: 11.8, change: -1.4 },
+            { name: 'Ashe', prev: 11.8, curr: 10.6, change: -1.2 },
+            { name: 'Genji', prev: 11.2, curr: 10.1, change: -1.1 },
+            { name: 'Orisa', prev: 11.5, curr: 9.6, change: -1.9 },
+            { name: 'D.Va', prev: 10.8, curr: 9.3, change: -1.5 },
+            { name: 'Sigma', prev: 10.1, curr: 9.2, change: -0.9 },
+            { name: 'Lucio', prev: 8.2, curr: 9.0, change: 0.8 },
+            { name: 'Zenyatta', prev: 7.9, curr: 8.6, change: 0.7 },
+            { name: 'Ramattra', prev: 9.4, curr: 8.6, change: -0.8 }
+        ];
+
+        let currentChart = null;
+
+        function getChangeColor(change) {
+            if (change > 0.5) return '#22c55e';
+            if (change < -0.5) return '#ef4444';
+            return '#94a3b8';
+        }
+
+        function renderChart(view) {
+            let filteredData = [...heroData];
+            
+            if (view === 'top') {
+                filteredData = filteredData.sort((a, b) => b.curr - a.curr).slice(0, 15);
+            } else if (view === 'gainers') {
+                filteredData = filteredData.sort((a, b) => b.change - a.change).slice(0, 15);
+            } else if (view === 'losers') {
+                filteredData = filteredData.sort((a, b) => a.change - b.change).slice(0, 15);
+            }
+
+            const categories = filteredData.map(h => h.name);
+            const prevData = filteredData.map(h => h.prev);
+            const currData = filteredData.map(h => ({ y: h.curr, fillColor: getChangeColor(h.change) }));
+
+            const options = {
+                series: [{
+                    name: 'Previous',
+                    data: prevData
+                }, {
+                    name: 'Current',
+                    data: currData
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 550,
+                    background: 'transparent',
+                    toolbar: {
+                        show: false
+                    },
+                    animations: {
+                        enabled: true,
+                        speed: 600
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: true,
+                        dataLabels: {
+                            position: 'top'
+                        },
+                        barHeight: '70%'
+                    }
+                },
+                colors: ['#64748b', '#94a3b8'],
+                dataLabels: {
+                    enabled: true,
+                    formatter: function(val) {
+                        return val.toFixed(1) + '%';
+                    },
+                    style: {
+                        fontSize: '11px',
+                        colors: ['#f1f5f9']
+                    },
+                    offsetX: 5
+                },
+                stroke: {
+                    show: true,
+                    width: 1,
+                    colors: ['#1e293b']
+                },
+                xaxis: {
+                    categories: categories,
+                    labels: {
+                        style: {
+                            colors: '#94a3b8',
+                            fontSize: '11px'
+                        }
+                    },
+                    axisBorder: {
+                        color: '#334155'
+                    },
+                    axisTicks: {
+                        color: '#334155'
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Pick Rate (%)',
+                        style: {
+                            color: '#94a3b8'
+                        }
+                    },
+                    labels: {
+                        style: {
+                            colors: '#94a3b8'
+                        }
+                    }
+                },
+                grid: {
+                    borderColor: '#334155',
+                    strokeDashArray: 4
+                },
+                tooltip: {
+                    theme: 'dark',
+                    y: {
+                        formatter: function(val, { seriesIndex, dataPointIndex, w }) {
+                            const hero = filteredData[dataPointIndex];
+                            const change = hero.change;
+                            const changeText = change > 0 ? `+${change.toFixed(1)}%` : `${change.toFixed(1)}%`;
+                            return `${val.toFixed(1)}% (${changeText})`;
+                        }
+                    }
+                },
+                legend: {
+                    show: false
+                }
+            };
+
+            if (currentChart) {
+                currentChart.destroy();
+            }
+
+            currentChart = new ApexCharts(document.querySelector("#chart"), options);
+            currentChart.render();
+        }
+
+        function switchView(view) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            renderChart(view);
+        }
+
+        // Initial render
+        renderChart('top');
+    </script>
+</body>
+</html>

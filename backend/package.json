@@ -1,0 +1,20 @@
+{
+  "name": "overwatch-backend",
+  "version": "1.0.0",
+  "description": "Backend API server for Overwatch stats dashboard",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "@types/better-sqlite3": "^7.6.8"
+  }
+}

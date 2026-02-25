@@ -160,8 +160,8 @@ export function HeatmapGrid({ data, metric }: HeatmapGridProps) {
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex gap-4">
+    <div className="space-y-3 sm:space-y-4">
+      <div className="flex gap-3 sm:gap-4">
         <input
           type="text"
           placeholder="Search heroes..."
@@ -170,35 +170,35 @@ export function HeatmapGrid({ data, metric }: HeatmapGridProps) {
             setSearchTerm(e.target.value);
             setCurrentPage(1);
           }}
-          className="flex-1 px-4 py-2 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+          className="flex-1 px-3 sm:px-4 py-2 text-sm sm:text-base bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
         />
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-border">
-        <table className="w-full text-sm">
+      <div className="overflow-x-auto rounded-lg border border-border -mx-3 sm:mx-0">
+        <table className="w-full text-xs sm:text-sm min-w-[600px]">
           <thead className="bg-muted/50 sticky top-0 z-10">
             <tr>
               <th
                 onClick={() => handleSort('hero')}
-                className="px-4 py-3 text-left font-semibold cursor-pointer hover:bg-muted/70 transition-colors select-none"
+                className="px-2 sm:px-4 py-2 sm:py-3 text-left font-semibold cursor-pointer hover:bg-muted/70 transition-colors select-none"
               >
                 Hero{getSortIcon('hero')}
               </th>
               <th
                 onClick={() => handleSort('role')}
-                className="px-4 py-3 text-left font-semibold cursor-pointer hover:bg-muted/70 transition-colors select-none"
+                className="px-2 sm:px-4 py-2 sm:py-3 text-left font-semibold cursor-pointer hover:bg-muted/70 transition-colors select-none"
               >
                 Role{getSortIcon('role')}
               </th>
               <th
                 onClick={() => handleSort('current')}
-                className="px-4 py-3 text-left font-semibold cursor-pointer hover:bg-muted/70 transition-colors select-none"
+                className="px-2 sm:px-4 py-2 sm:py-3 text-left font-semibold cursor-pointer hover:bg-muted/70 transition-colors select-none"
               >
                 {metric === 'pick_rate' ? 'Pick Rate' : 'Win Rate'}{getSortIcon('current')}
               </th>
               <th
                 onClick={() => handleSort('change')}
-                className="px-4 py-3 text-left font-semibold cursor-pointer hover:bg-muted/70 transition-colors select-none"
+                className="px-2 sm:px-4 py-2 sm:py-3 text-left font-semibold cursor-pointer hover:bg-muted/70 transition-colors select-none"
               >
                 Change{getSortIcon('change')}
               </th>
@@ -210,28 +210,28 @@ export function HeatmapGrid({ data, metric }: HeatmapGridProps) {
                 key={item.hero}
                 className="border-b border-border hover:bg-accent/50 transition-colors"
               >
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-3 font-medium">
+                <td className="px-2 sm:px-4 py-2 sm:py-3">
+                  <div className="flex items-center gap-2 sm:gap-3 font-medium">
                     {getHeroPortrait(item.hero) ? (
                       <img 
                         src={getHeroPortrait(item.hero)!} 
                         alt={formatHeroName(item.hero)}
-                        className="w-8 h-8 rounded-full object-cover border-2 border-border"
+                        className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover border-2 border-border flex-shrink-0"
                       />
                     ) : (
-                      <span className={`w-8 h-8 rounded-full ${getRoleColor(item.role)}`} />
+                      <span className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full ${getRoleColor(item.role)} flex-shrink-0`} />
                     )}
-                    {formatHeroName(item.hero)}
+                    <span className="truncate">{formatHeroName(item.hero)}</span>
                   </div>
                 </td>
-                <td className="px-4 py-3 text-muted-foreground">
+                <td className="px-2 sm:px-4 py-2 sm:py-3 text-muted-foreground">
                   {item.role}
                 </td>
-                <td className="px-4 py-3 font-semibold">
+                <td className="px-2 sm:px-4 py-2 sm:py-3 font-semibold">
                   {item.current.toFixed(1)}%
                 </td>
-                <td className="px-4 py-3">
-                  <div className={`inline-block px-3 py-1 rounded-md font-semibold ${getChangeClass(item.change)}`}>
+                <td className="px-2 sm:px-4 py-2 sm:py-3">
+                  <div className={`inline-block px-2 sm:px-3 py-1 rounded-md font-semibold text-xs sm:text-sm ${getChangeClass(item.change)}`}>
                     {item.change > 0 ? '+' : ''}{item.change.toFixed(1)}%
                   </div>
                 </td>
@@ -242,11 +242,11 @@ export function HeatmapGrid({ data, metric }: HeatmapGridProps) {
       </div>
 
       {totalPages > 1 && (
-        <div className="flex justify-center gap-2">
+        <div className="flex justify-center gap-1 sm:gap-2 flex-wrap">
           <button
             onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="px-3 sm:px-4 py-2 text-xs sm:text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             ← Previous
           </button>
@@ -255,7 +255,7 @@ export function HeatmapGrid({ data, metric }: HeatmapGridProps) {
             <button
               key={page}
               onClick={() => setCurrentPage(page)}
-              className={`px-4 py-2 rounded-md transition-colors ${
+              className={`px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-md transition-colors ${
                 currentPage === page
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
@@ -268,38 +268,38 @@ export function HeatmapGrid({ data, metric }: HeatmapGridProps) {
           <button
             onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="px-3 sm:px-4 py-2 text-xs sm:text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             Next →
           </button>
         </div>
       )}
 
-      <div className="flex justify-center gap-6 text-sm flex-wrap">
+      <div className="flex justify-center gap-4 sm:gap-6 text-xs sm:text-sm flex-wrap px-2">
         <div className="flex items-center gap-2">
           <div className="flex -space-x-2">
-            <img src={getHeroPortrait('reinhardt')!} alt="Tank" className="w-6 h-6 rounded-full border-2 border-background" />
-            <img src={getHeroPortrait('dva')!} alt="Tank" className="w-6 h-6 rounded-full border-2 border-background" />
+            <img src={getHeroPortrait('reinhardt')!} alt="Tank" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-background" />
+            <img src={getHeroPortrait('dva')!} alt="Tank" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-background" />
           </div>
           <span className="text-muted-foreground">Tank</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex -space-x-2">
-            <img src={getHeroPortrait('tracer')!} alt="Damage" className="w-6 h-6 rounded-full border-2 border-background" />
-            <img src={getHeroPortrait('genji')!} alt="Damage" className="w-6 h-6 rounded-full border-2 border-background" />
+            <img src={getHeroPortrait('tracer')!} alt="Damage" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-background" />
+            <img src={getHeroPortrait('genji')!} alt="Damage" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-background" />
           </div>
           <span className="text-muted-foreground">Damage</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex -space-x-2">
-            <img src={getHeroPortrait('mercy')!} alt="Support" className="w-6 h-6 rounded-full border-2 border-background" />
-            <img src={getHeroPortrait('ana')!} alt="Support" className="w-6 h-6 rounded-full border-2 border-background" />
+            <img src={getHeroPortrait('mercy')!} alt="Support" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-background" />
+            <img src={getHeroPortrait('ana')!} alt="Support" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-background" />
           </div>
           <span className="text-muted-foreground">Support</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-16 h-4 rounded" style={{ background: 'linear-gradient(to right, rgba(239, 68, 68, 0.4), rgba(148, 163, 184, 0.2), rgba(34, 197, 94, 0.4))' }} />
-          <span className="text-muted-foreground">Change Gradient</span>
+          <div className="w-12 sm:w-16 h-3 sm:h-4 rounded" style={{ background: 'linear-gradient(to right, rgba(239, 68, 68, 0.4), rgba(148, 163, 184, 0.2), rgba(34, 197, 94, 0.4))' }} />
+          <span className="text-muted-foreground">Change</span>
         </div>
       </div>
     </div>

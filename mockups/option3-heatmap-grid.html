@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Option 3: Heatmap Grid with Sortable Columns</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #f1f5f9;
+        }
+        .subtitle {
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+        .card {
+            background: #1e293b;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .info-box {
+            background: #334155;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .info-box h3 {
+            color: #fbbf24;
+            margin-bottom: 0.5rem;
+        }
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        .table-container {
+            overflow-x: auto;
+            border-radius: 0.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        th {
+            background: #0f172a;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #f1f5f9;
+            cursor: pointer;
+            user-select: none;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        th:hover {
+            background: #1e293b;
+        }
+        th::after {
+            content: ' ↕';
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+        th.sorted-asc::after {
+            content: ' ↑';
+            color: #3b82f6;
+        }
+        th.sorted-desc::after {
+            content: ' ↓';
+            color: #3b82f6;
+        }
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #334155;
+        }
+        tr:hover {
+            background: #334155;
+        }
+        .hero-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+        .role-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .role-tank { background: #FAA81A; }
+        .role-damage { background: #E3191C; }
+        .role-support { background: #FEF06E; }
+        .heatmap-cell {
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .change-positive { 
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.4));
+            color: #22c55e;
+        }
+        .change-negative { 
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.4));
+            color: #ef4444;
+        }
+        .change-neutral { 
+            background: rgba(148, 163, 184, 0.2);
+            color: #94a3b8;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .page-btn {
+            padding: 0.5rem 1rem;
+            background: #334155;
+            border: none;
+            border-radius: 0.5rem;
+            color: #e2e8f0;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .page-btn:hover {
+            background: #475569;
+        }
+        .page-btn.active {
+            background: #3b82f6;
+            color: #fff;
+        }
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .legend {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #0f172a;
+            border-radius: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .legend-gradient {
+            width: 60px;
+            height: 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Option 3: Heatmap Grid</h1>
+        <p class="subtitle">Sortable Data Table with Color-Coded Values</p>
+        
+        <div class="info-box">
+            <h3>📊 How to Read This Table</h3>
+            <p>Click column headers to sort. Color intensity shows value magnitude. Green = positive change, Red = negative change. Search to filter heroes by name.</p>
+        </div>
+
+        <div class="card">
+            <div class="controls">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search heroes..." onkeyup="filterTable()">
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table id="heroTable">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable(0)">Hero</th>
+                            <th onclick="sortTable(1)">Role</th>
+                            <th onclick="sortTable(2)">Pick Rate</th>
+                            <th onclick="sortTable(3)">Pick Change</th>
+                            <th onclick="sortTable(4)">Win Rate</th>
+                            <th onclick="sortTable(5)">Win Change</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination" id="pagination"></div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <span class="role-icon role-tank"></span>
+                <span>Tank</span>
+            </div>
+            <div class="legend-item">
+                <span class="role-icon role-damage"></span>
+                <span>Damage</span>
+            </div>
+            <div class="legend-item">
+                <span class="role-icon role-support"></span>
+                <span>Support</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-gradient" style="background: linear-gradient(to right, rgba(239, 68, 68, 0.4), rgba(148, 163, 184, 0.2), rgba(34, 197, 94, 0.4));"></div>
+                <span>Change Gradient</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const heroData = [
+            { name: 'Mizuki', role: 'Support', pickRate: 37.1, pickChange: 2.6, winRate: 53.4, winChange: 1.2 },
+            { name: 'Jetpack Cat', role: 'Support', pickRate: 38.4, pickChange: 3.2, winRate: 52.3, winChange: 0.8 },
+            { name: 'Emre', role: 'Damage', pickRate: 28.4, pickChange: 1.6, winRate: 47.1, winChange: -1.4 },
+            { name: 'Domina', role: 'Tank', pickRate: 27.0, pickChange: 1.5, winRate: 51.1, winChange: 0.5 },
+            { name: 'Anran', role: 'Damage', pickRate: 23.6, pickChange: 1.5, winRate: 50.3, winChange: 0.2 },
+            { name: 'Moira', role: 'Support', pickRate: 27.1, pickChange: 1.2, winRate: 49.8, winChange: -0.3 },
+            { name: 'Kiriko', role: 'Support', pickRate: 24.6, pickChange: 0.8, winRate: 46.0, winChange: -2.1 },
+            { name: 'Juno', role: 'Support', pickRate: 20.1, pickChange: 0.6, winRate: 51.8, winChange: 1.5 },
+            { name: 'Soldier: 76', role: 'Damage', pickRate: 20.6, pickChange: -0.8, winRate: 51.9, winChange: 0.9 },
+            { name: 'Cassidy', role: 'Damage', pickRate: 19.6, pickChange: -0.6, winRate: 49.7, winChange: -0.4 },
+            { name: 'Ana', role: 'Support', pickRate: 19.5, pickChange: 0.6, winRate: 46.5, winChange: -1.8 },
+            { name: 'Mercy', role: 'Support', pickRate: 18.5, pickChange: -0.6, winRate: 49.5, winChange: 0.1 },
+            { name: 'Reinhardt', role: 'Tank', pickRate: 11.9, pickChange: 1.4, winRate: 53.1, winChange: 1.8 },
+            { name: 'Reaper', role: 'Damage', pickRate: 14.0, pickChange: 1.2, winRate: 52.5, winChange: 2.1 },
+            { name: 'Bastion', role: 'Damage', pickRate: 14.0, pickChange: 1.5, winRate: 49.9, winChange: -0.2 },
+            { name: 'Sojourn', role: 'Damage', pickRate: 11.8, pickChange: -1.4, winRate: 47.3, winChange: -1.9 },
+            { name: 'Genji', role: 'Damage', pickRate: 10.1, pickChange: -1.1, winRate: 50.8, winChange: 0.6 },
+            { name: 'Ashe', role: 'Damage', pickRate: 10.6, pickChange: -1.2, winRate: 51.2, winChange: 0.8 },
+            { name: 'Orisa', role: 'Tank', pickRate: 9.6, pickChange: -1.9, winRate: 45.0, winChange: -2.5 },
+            { name: 'D.Va', role: 'Tank', pickRate: 9.3, pickChange: -1.5, winRate: 49.5, winChange: -0.7 },
+            { name: 'Sigma', role: 'Tank', pickRate: 9.2, pickChange: -0.9, winRate: 50.5, winChange: 0.3 },
+            { name: 'Lucio', role: 'Support', pickRate: 9.0, pickChange: 0.8, winRate: 50.8, winChange: 0.9 },
+            { name: 'Zenyatta', role: 'Support', pickRate: 8.6, pickChange: 0.7, winRate: 54.1, winChange: 2.3 },
+            { name: 'Ramattra', role: 'Tank', pickRate: 8.6, pickChange: -0.8, winRate: 49.5, winChange: -0.6 },
+            { name: 'Illari', role: 'Support', pickRate: 6.8, pickChange: 0.3, winRate: 54.4, winChange: 1.9 },
+            { name: 'Junkrat', role: 'Damage', pickRate: 7.5, pickChange: -0.4, winRate: 47.5, winChange: -1.2 },
+            { name: 'Tracer', role: 'Damage', pickRate: 6.7, pickChange: -0.8, winRate: 49.8, winChange: 0.2 },
+            { name: 'Mei', role: 'Damage', pickRate: 6.7, pickChange: 0.5, winRate: 50.9, winChange: 0.7 },
+            { name: 'Winston', role: 'Tank', pickRate: 6.9, pickChange: 0.6, winRate: 52.4, winChange: 1.1 },
+            { name: 'Wuyang', role: 'Support', pickRate: 6.1, pickChange: 0.4, winRate: 50.9, winChange: 0.6 }
+        ];
+
+        let currentPage = 1;
+        const rowsPerPage = 20;
+        let filteredData = [...heroData];
+        let sortColumn = 2;
+        let sortAsc = false;
+
+        function getChangeClass(change) {
+            if (change > 0.5) return 'change-positive';
+            if (change < -0.5) return 'change-negative';
+            return 'change-neutral';
+        }
+
+        function getRoleClass(role) {
+            return 'role-' + role.toLowerCase();
+        }
+
+        function renderTable() {
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const pageData = filteredData.slice(start, end);
+
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            pageData.forEach(hero => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>
+                        <div class="hero-cell">
+                            <span class="role-icon ${getRoleClass(hero.role)}"></span>
+                            ${hero.name}
+                        </div>
+                    </td>
+                    <td>${hero.role}</td>
+                    <td>${hero.pickRate.toFixed(1)}%</td>
+                    <td>
+                        <div class="heatmap-cell ${getChangeClass(hero.pickChange)}">
+                            ${hero.pickChange > 0 ? '+' : ''}${hero.pickChange.toFixed(1)}%
+                        </div>
+                    </td>
+                    <td>${hero.winRate.toFixed(1)}%</td>
+                    <td>
+                        <div class="heatmap-cell ${getChangeClass(hero.winChange)}">
+                            ${hero.winChange > 0 ? '+' : ''}${hero.winChange.toFixed(1)}%
+                        </div>
+                    </td>
+                `;
+            });
+
+            renderPagination();
+        }
+
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'page-btn';
+            prevBtn.textContent = '← Previous';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderTable();
+                }
+            };
+            pagination.appendChild(prevBtn);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'page-btn' + (i === currentPage ? ' active' : '');
+                btn.textContent = i;
+                btn.onclick = () => {
+                    currentPage = i;
+                    renderTable();
+                };
+                pagination.appendChild(btn);
+            }
+
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'page-btn';
+            nextBtn.textContent = 'Next →';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderTable();
+                }
+            };
+            pagination.appendChild(nextBtn);
+        }
+
+        function sortTable(column) {
+            const headers = document.querySelectorAll('th');
+            headers.forEach((h, i) => {
+                h.classList.remove('sorted-asc', 'sorted-desc');
+            });
+
+            if (sortColumn === column) {
+                sortAsc = !sortAsc;
+            } else {
+                sortColumn = column;
+                sortAsc = false;
+            }
+
+            headers[column].classList.add(sortAsc ? 'sorted-asc' : 'sorted-desc');
+
+            const keys = ['name', 'role', 'pickRate', 'pickChange', 'winRate', 'winChange'];
+            const key = keys[column];
+
+            filteredData.sort((a, b) => {
+                let valA = a[key];
+                let valB = b[key];
+                
+                if (typeof valA === 'string') {
+                    valA = valA.toLowerCase();
+                    valB = valB.toLowerCase();
+                }
+
+                if (sortAsc) {
+                    return valA > valB ? 1 : -1;
+                } else {
+                    return valA < valB ? 1 : -1;
+                }
+            });
+
+            currentPage = 1;
+            renderTable();
+        }
+
+        function filterTable() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            filteredData = heroData.filter(h => h.name.toLowerCase().includes(search));
+            currentPage = 1;
+            renderTable();
+        }
+
+        // Initial render
+        sortTable(2);
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "overwatch-stats-dashboard",
+  "version": "1.0.0",
+  "description": "Local-first Overwatch 2 statistics visualization dashboard",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "scraper"
+  ],
+  "scripts": {
+    "install-all": "npm install && npm install --workspace=frontend && npm install --workspace=backend && npm install --workspace=scraper",
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "scrape": "npm run scrape --workspace=scraper",
+    "build:frontend": "npm run build --workspace=frontend",
+    "start": "npm run start --workspace=backend"
+  },
+  "keywords": ["overwatch", "statistics", "dashboard", "local-first"],
+  "author": "",
+  "license": "MIT"
+}

@@ -99,10 +99,10 @@ export function FilterPanel({ filters, onFilterChange }: FilterPanelProps) {
   };
 
   return (
-    <div className="flex flex-wrap gap-4 items-center justify-between p-6 bg-card rounded-lg border">
-      <div className="flex flex-wrap gap-4 items-center">
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium text-muted-foreground">Mode</label>
+    <div className="flex flex-wrap gap-3 sm:gap-4 items-center justify-between p-4 sm:p-6 bg-card rounded-lg border">
+      <div className="flex flex-wrap gap-3 sm:gap-4 items-center w-full">
+        <div className="flex flex-col gap-1 min-w-[120px] flex-1 sm:flex-initial">
+          <label className="text-xs sm:text-sm font-medium text-muted-foreground">Mode</label>
           <Select
             value={filters.mode}
             onChange={(e) => handleChange('mode', e.target.value)}
@@ -113,8 +113,8 @@ export function FilterPanel({ filters, onFilterChange }: FilterPanelProps) {
           </Select>
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium text-muted-foreground">Tier</label>
+        <div className="flex flex-col gap-1 min-w-[120px] flex-1 sm:flex-initial">
+          <label className="text-xs sm:text-sm font-medium text-muted-foreground">Tier</label>
           <Select
             value={filters.tier}
             onChange={(e) => handleChange('tier', e.target.value)}
@@ -125,8 +125,8 @@ export function FilterPanel({ filters, onFilterChange }: FilterPanelProps) {
           </Select>
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium text-muted-foreground">Region</label>
+        <div className="flex flex-col gap-1 min-w-[120px] flex-1 sm:flex-initial">
+          <label className="text-xs sm:text-sm font-medium text-muted-foreground">Region</label>
           <Select
             value={filters.region}
             onChange={(e) => handleChange('region', e.target.value)}
@@ -137,8 +137,8 @@ export function FilterPanel({ filters, onFilterChange }: FilterPanelProps) {
           </Select>
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium text-muted-foreground">Input</label>
+        <div className="flex flex-col gap-1 min-w-[120px] flex-1 sm:flex-initial">
+          <label className="text-xs sm:text-sm font-medium text-muted-foreground">Input</label>
           <Select
             value={filters.input}
             onChange={(e) => handleChange('input', e.target.value)}
@@ -149,8 +149,8 @@ export function FilterPanel({ filters, onFilterChange }: FilterPanelProps) {
           </Select>
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium text-muted-foreground">Map</label>
+        <div className="flex flex-col gap-1 min-w-[140px] flex-1 sm:flex-initial">
+          <label className="text-xs sm:text-sm font-medium text-muted-foreground">Map</label>
           <Select
             value={filters.map}
             onChange={(e) => handleChange('map', e.target.value)}

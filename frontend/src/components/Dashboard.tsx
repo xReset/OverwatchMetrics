@@ -26,7 +26,6 @@ export function Dashboard() {
   const [fadeOut, setFadeOut] = useState(false);
 
   const loadData = async () => {
-    console.log('[Dashboard] Loading data with filters:', filters);
     setFadeOut(true);
     await new Promise(resolve => setTimeout(resolve, 200));
     
@@ -37,15 +36,12 @@ export function Dashboard() {
         fetchTopHeroes({ ...filters, metric: 'pick_rate', limit: 10 }),
         fetchTopHeroes({ ...filters, metric: 'win_rate', limit: 10 })
       ]);
-
-      console.log('[Dashboard] Loaded comparison data:', comparison.length, 'heroes');
-      console.log('[Dashboard] Top pick rate hero:', pickRate.top[0]?.hero, pickRate.top[0]?.pick_rate);
       
       setComparisonData(comparison);
       setTopPickRate(pickRate.top);
       setTopWinRate(winRate.top);
     } catch (error) {
-      console.error('[Dashboard] Failed to load data:', error);
+      console.error('Failed to load data:', error);
     } finally {
       setIsLoading(false);
       setFadeOut(false);
@@ -60,10 +56,10 @@ export function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 space-y-6">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2">Overwatch 2 Statistics Dashboard</h1>
-          <p className="text-muted-foreground">Track hero performance across patches</p>
+      <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 space-y-4 sm:space-y-6">
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">Overwatch 2 Statistics Dashboard</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">Track hero performance across patches</p>
         </div>
 
         <FilterPanel
@@ -71,13 +67,13 @@ export function Dashboard() {
           onFilterChange={setFilters}
         />
 
-        <div className="flex gap-4 justify-center flex-wrap">
+        <div className="flex gap-2 sm:gap-4 justify-center flex-wrap">
           <div className="flex gap-2">
             {METRICS.map(metric => (
               <button
                 key={metric.value}
                 onClick={() => setSelectedMetric(metric.value)}
-                className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                className={`px-3 sm:px-4 py-2 text-sm sm:text-base rounded-md font-medium transition-colors ${
                   selectedMetric === metric.value
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
@@ -107,7 +103,7 @@ export function Dashboard() {
                 </CardContent>
               </Card>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mt-4 sm:mt-6">
                 <TopXPanel
                   title="Top 10 Pick Rate"
                   heroes={topPickRate}

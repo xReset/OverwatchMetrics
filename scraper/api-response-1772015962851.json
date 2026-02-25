@@ -1,0 +1,646 @@
+{
+  "localeSelector": {
+    "regions": [
+      {
+        "title": "Americas & Southeast Asia",
+        "code": "us",
+        "languages": [
+          {
+            "title": "English (US)",
+            "locale": "en-us"
+          },
+          {
+            "title": "English (SEA)",
+            "locale": "en-sg"
+          },
+          {
+            "title": "Español (Latino)",
+            "locale": "es-mx"
+          },
+          {
+            "title": "Português (Brasil)",
+            "locale": "pt-br"
+          },
+          {
+            "title": "ภาษาไทย",
+            "locale": "th-th"
+          },
+          {
+            "title": "日本語",
+            "locale": "ja-jp"
+          }
+        ]
+      },
+      {
+        "title": "Europe",
+        "code": "eu",
+        "languages": [
+          {
+            "title": "Deutsch",
+            "locale": "de-de"
+          },
+          {
+            "title": "English (EU)",
+            "locale": "en-gb"
+          },
+          {
+            "title": "Español (EU)",
+            "locale": "es-es"
+          },
+          {
+            "title": "Français",
+            "locale": "fr-fr"
+          },
+          {
+            "title": "Italiano",
+            "locale": "it-it"
+          },
+          {
+            "title": "Polski",
+            "locale": "pl-pl"
+          },
+          {
+            "title": "Português (EU)",
+            "locale": "pt-pt"
+          },
+          {
+            "title": "Русский",
+            "locale": "ru-ru"
+          },
+          {
+            "title": "Türkçe",
+            "locale": "tr-tr"
+          }
+        ]
+      },
+      {
+        "title": "Korea",
+        "code": "kr",
+        "languages": [
+          {
+            "title": "한국어",
+            "locale": "ko-kr"
+          }
+        ]
+      },
+      {
+        "title": "Taiwan",
+        "code": "tw",
+        "languages": [
+          {
+            "title": "繁體中文",
+            "locale": "zh-tw"
+          }
+        ]
+      },
+      {
+        "title": "China",
+        "code": "cn",
+        "languages": [
+          {
+            "title": "简体中文",
+            "locale": "zh-cn"
+          }
+        ]
+      }
+    ],
+    "regionsTitle": "Region",
+    "regionListLabel": "Select a region",
+    "languagesTitle": "Language",
+    "languageListLabel": "Select a language"
+  },
+  "topLinks": {
+    "title": "Top Links - Footer v2",
+    "elementID": "",
+    "slot": "dropdown-primary-menu",
+    "links": [
+      {
+        "title": "Footer - Careers",
+        "elementID": "blz-nav-footer-careers",
+        "slot": "dropdown-primary-menu",
+        "blzModalTrigger": "",
+        "text": "Careers",
+        "subtext": "",
+        "badge": "",
+        "icon": "",
+        "iconSize": "",
+        "href": "https://careers.blizzard.com",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "footer-top-link",
+        "variant": "footer-top-link",
+        "eventLabel": "Careers",
+        "ctaPlacement": "Footer",
+        "hideOnDesktop": false,
+        "hideOnMobile": false,
+        "requiresAuthentication": false
+      },
+      {
+        "title": "Footer - About",
+        "elementID": "blz-nav-footer-about",
+        "slot": "dropdown-primary-menu",
+        "blzModalTrigger": "",
+        "text": "About",
+        "subtext": "",
+        "badge": "",
+        "icon": "",
+        "iconSize": "",
+        "href": "https://www.blizzard.com/company/about/",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "footer-top-link",
+        "variant": "footer-top-link",
+        "eventLabel": "About",
+        "ctaPlacement": "Footer",
+        "hideOnDesktop": false,
+        "hideOnMobile": false,
+        "requiresAuthentication": false
+      },
+      {
+        "title": "Footer - Support",
+        "elementID": "blz-nav-footer-support",
+        "slot": "dropdown-primary-menu",
+        "blzModalTrigger": "",
+        "text": "Support",
+        "subtext": "",
+        "badge": "",
+        "icon": "",
+        "iconSize": "",
+        "href": "https://www.battle.net/support/",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "footer-top-link",
+        "variant": "footer-top-link",
+        "eventLabel": "Support",
+        "hideOnDesktop": false,
+        "hideOnMobile": false,
+        "requiresAuthentication": false
+      },
+      {
+        "title": "Footer - Contact us",
+        "elementID": "blz-nav-footer-contact",
+        "slot": "dropdown-primary-menu",
+        "blzDevice": "",
+        "blzModalTrigger": "",
+        "text": "Contact Us",
+        "subtext": "",
+        "badge": "",
+        "icon": "",
+        "iconSize": "",
+        "href": "https://www.blizzard.com/company/contact",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "footer-top-link",
+        "variant": "footer-top-link",
+        "eventLabel": "Contact us",
+        "ctaPlacement": "Footer",
+        "hideOnDesktop": false,
+        "hideOnMobile": false,
+        "requiresAuthentication": false
+      },
+      {
+        "title": "Footer - Press",
+        "elementID": "blz-nav-footer-press",
+        "slot": "dropdown-primary-menu",
+        "blzModalTrigger": "",
+        "text": "Press",
+        "subtext": "",
+        "badge": "",
+        "icon": "",
+        "iconSize": "",
+        "href": "https://blizzard.gamespress.com/",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "footer-top-link",
+        "variant": "footer-top-link",
+        "eventLabel": "Press",
+        "ctaPlacement": "Footer",
+        "hideOnDesktop": false,
+        "hideOnMobile": false,
+        "requiresAuthentication": false
+      },
+      {
+        "title": "Footer - Api",
+        "elementID": "blz-nav-footer-api",
+        "slot": "dropdown-primary-menu",
+        "blzDevice": "",
+        "blzModalTrigger": "",
+        "text": "API",
+        "subtext": "",
+        "badge": "",
+        "icon": "",
+        "iconSize": "",
+        "href": "https://community.developer.battle.net/",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "footer-top-link",
+        "variant": "footer-top-link",
+        "eventLabel": "API",
+        "ctaPlacement": "Footer",
+        "hideOnDesktop": false,
+        "hideOnMobile": false,
+        "requiresAuthentication": false
+      }
+    ]
+  },
+  "bottomLinks": {
+    "title": "Bottom Links - Footer v2",
+    "elementID": "",
+    "slot": "footer-secondary",
+    "links": [
+      {
+        "title": "Footer - Privacy",
+        "elementID": "blz-nav-footer-privacy",
+        "slot": "footer-secondary",
+        "blzDevice": "",
+        "blzModalTrigger": "",
+        "text": "Privacy",
+        "subtext": "",
+        "badge": "",
+        "icon": "",
+        "iconSize": "",
+        "href": "https://www.blizzard.com/privacy",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "footer-bottom-link",
+        "variant": "footer-bottom-link",
+        "eventLabel": "Privacy",
+        "ctaPlacement": "Footer",
+        "hideOnDesktop": false,
+        "hideOnMobile": false,
+        "requiresAuthentication": false
+      },
+      {
+        "title": "Footer - Legal",
+        "elementID": "blz-nav-footer-legal",
+        "slot": "footer-secondary",
+        "blzModalTrigger": "",
+        "text": "Legal",
+        "subtext": "",
+        "badge": "",
+        "icon": "",
+        "iconSize": "",
+        "href": "https://www.blizzard.com/legal/",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "footer-bottom-link",
+        "variant": "footer-bottom-link",
+        "eventLabel": "Legal",
+        "hideOnDesktop": false,
+        "hideOnMobile": false,
+        "requiresAuthentication": false
+      },
+      {
+        "title": "Terms",
+        "elementID": "blz-nav-footer-terms",
+        "slot": "footer-secondary",
+        "blzModalTrigger": "",
+        "text": "Terms",
+        "subtext": "",
+        "badge": "",
+        "icon": "",
+        "iconSize": "",
+        "href": "https://www.blizzard.com/tou",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "footer-bottom-link",
+        "variant": "footer-bottom-link",
+        "eventLabel": "Terms",
+        "ctaPlacement": "Footer",
+        "hideOnDesktop": false,
+        "hideOnMobile": false,
+        "requiresAuthentication": false
+      },
+      {
+        "title": "Cookie policy",
+        "elementID": "blz-nav-footer-cookie-policy",
+        "slot": "footer-secondary",
+        "blzModalTrigger": "",
+        "text": "Cookie Policy",
+        "subtext": "",
+        "badge": "",
+        "icon": "",
+        "iconSize": "",
+        "href": "https://www.blizzard.com/cookies",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "footer-bottom-link",
+        "variant": "footer-bottom-link",
+        "eventLabel": "Cookie Policy",
+        "ctaPlacement": "Footer",
+        "hideOnDesktop": false,
+        "hideOnMobile": false,
+        "requiresAuthentication": false
+      },
+      {
+        "title": "Cookie settings",
+        "elementID": "blz-nav-footer-cookie-settings",
+        "slot": "footer-secondary",
+        "blzModalTrigger": "",
+        "text": "Cookie Settings",
+        "subtext": "",
+        "badge": "",
+        "icon": "",
+        "iconSize": "",
+        "href": "https://www.blizzard.com/cookies#settings",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "footer-bottom-link",
+        "variant": "footer-bottom-link",
+        "eventLabel": "Cookie Settings",
+        "ctaPlacement": "Footer",
+        "hideOnDesktop": false,
+        "hideOnMobile": false,
+        "requiresAuthentication": false
+      }
+    ]
+  },
+  "socialLinks": {
+    "title": "blizzard-social-links",
+    "elementID": "",
+    "slot": "footer-social",
+    "links": [
+      {
+        "title": "Footer Social - Twitter",
+        "elementID": "blz-nav-twitter",
+        "slot": "footer-social",
+        "blzModalTrigger": "",
+        "text": "",
+        "subtext": "",
+        "badge": "",
+        "icon": "twitter",
+        "iconSize": "500",
+        "href": "https://twitter.com/Blizzard_Ent",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "icon-only",
+        "variant": "icon-only",
+        "eventLabel": "Twitter",
+        "ctaPlacement": "Footer",
+        "hideOnDesktop": false,
+        "hideOnMobile": false
+      },
+      {
+        "title": "Footer Social - Facebook",
+        "elementID": "blz-nav-facebook",
+        "slot": "footer-social",
+        "blzModalTrigger": "",
+        "text": "",
+        "subtext": "",
+        "badge": "",
+        "icon": "facebook",
+        "iconSize": "500",
+        "href": "https://www.facebook.com/Blizzard/",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "icon-only",
+        "variant": "icon-only",
+        "eventLabel": "Facebook",
+        "ctaPlacement": "Footer",
+        "hideOnDesktop": false,
+        "hideOnMobile": false
+      },
+      {
+        "title": "Footer Social - Reddit",
+        "elementID": "blz-nav-reddit",
+        "slot": "footer-social",
+        "blzModalTrigger": "",
+        "text": "",
+        "subtext": "",
+        "badge": "",
+        "icon": "reddit",
+        "iconSize": "500",
+        "href": "https://www.reddit.com/r/Blizzard/",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "icon-only",
+        "variant": "icon-only",
+        "eventLabel": "Reddit",
+        "ctaPlacement": "Footer",
+        "hideOnDesktop": false,
+        "hideOnMobile": false,
+        "requiresAuthentication": false
+      },
+      {
+        "title": "Footer Social - Instagram",
+        "elementID": "blz-nav-instagram",
+        "slot": "footer-social",
+        "blzModalTrigger": "",
+        "text": "",
+        "subtext": "",
+        "badge": "",
+        "icon": "instagram",
+        "iconSize": "500",
+        "href": "https://www.instagram.com/blizzard/",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "icon-only",
+        "variant": "icon-only",
+        "eventLabel": "Instagram",
+        "ctaPlacement": "Footer",
+        "hideOnDesktop": false,
+        "hideOnMobile": false,
+        "requiresAuthentication": false
+      },
+      {
+        "title": "Footer Social - YouTube",
+        "elementID": "blz-nav-youtube",
+        "slot": "footer-social",
+        "blzModalTrigger": "",
+        "text": "",
+        "subtext": "",
+        "badge": "",
+        "icon": "youtube",
+        "iconSize": "500",
+        "href": "https://www.youtube.com/blizzard",
+        "isMobileGame": false,
+        "isExternal": false,
+        "classes": "icon-only",
+        "variant": "icon-only",
+        "eventLabel": "YouTube",
+        "ctaPlacement": "Footer",
+        "hideOnDesktop": false,
+        "hideOnMobile": false,
+        "requiresAuthentication": false
+      }
+    ]
+  },
+  "trademark": [
+    {
+      "title": "Trademark",
+      "idSelector": "trademark",
+      "classes": "trademark",
+      "content": [
+        {
+          "title": "©2021 blizzard entertainment, inc. All rights reserved.",
+          "type": "Plain",
+          "text": "©{year} Blizzard Entertainment, Inc.",
+          "url": "",
+          "media": null,
+          "alt": ""
+        },
+        {
+          "title": "Line Break 1",
+          "type": "Break",
+          "text": "",
+          "url": ""
+        },
+        {
+          "title": "All",
+          "type": "Plain",
+          "text": "All",
+          "url": ""
+        },
+        {
+          "title": "Spacer 1",
+          "type": "Space",
+          "text": "",
+          "url": ""
+        },
+        {
+          "title": "Trademarks",
+          "type": "Bold",
+          "text": "trademarks",
+          "url": "https://www.blizzard.com/legal/b04001c4-dc81-480d-a475-5e276e241e4f/",
+          "media": null,
+          "alt": ""
+        },
+        {
+          "title": "Spacer 2",
+          "type": "Space",
+          "text": "",
+          "url": ""
+        },
+        {
+          "title": "Referenced herein are the properties of their respective owners.",
+          "type": "Plain",
+          "text": "referenced herein are the properties of their respective owners.",
+          "url": ""
+        },
+        {
+          "title": "Line Break 1",
+          "type": "Break",
+          "text": "",
+          "url": ""
+        },
+        {
+          "title": "Do not sell or share my personal information",
+          "type": "Bold",
+          "text": "Do not sell or share my personal information",
+          "url": "https://www.blizzard.com/legal/a97631bf-2b21-4755-a740-5934bd5cb632/",
+          "media": null,
+          "alt": ""
+        }
+      ]
+    }
+  ],
+  "legalData": {
+    "items": [
+      {
+        "ratingId": "a9b05994-9068-4689-9620-24b97860e4d0",
+        "ratingGroupId": "d46c91dd-6e03-4c39-b98a-14853086625e",
+        "ratingBoardId": "bb42322a-629a-4904-8bf7-a917c98d3b30",
+        "ratingBoardName": "ESRB",
+        "localizedName": "T (Teen)",
+        "localizedDescription": null,
+        "locale": "en-US",
+        "customImageUrl": null,
+        "ratingImageUrl": "https://images.blz-contentstack.com/v3/assets/blt3d2b37a4c9c0ce28/blteda65bf57e501050/5cf6e294cf7aa6330ac66a99/t.424Bl.png",
+        "referenceUrl": "https://www.esrb.org/ratings-guide/",
+        "ratingContentGroups": [
+          {
+            "ratingContentGroupId": "f62c693a-7519-4ffc-aa73-6cb7f27bd87c",
+            "position": 1,
+            "ratingContents": [
+              {
+                "ratingContentId": "cdc96d72-bfc9-4b76-b970-ab1b0da3203b",
+                "ratingContentGroupId": "f62c693a-7519-4ffc-aa73-6cb7f27bd87c",
+                "localizedName": "Blood",
+                "localizedDescription": "Depictions of blood.",
+                "locale": "en-US",
+                "imageUrl": null,
+                "position": 4
+              },
+              {
+                "ratingContentId": "691682f0-b9bc-425c-80ad-85393e5a9a86",
+                "ratingContentGroupId": "f62c693a-7519-4ffc-aa73-6cb7f27bd87c",
+                "localizedName": "Mild Language",
+                "localizedDescription": null,
+                "locale": "en-US",
+                "imageUrl": null,
+                "position": 18
+              },
+              {
+                "ratingContentId": "4c4ae530-c10f-4aa0-beb9-3459fcd987c6",
+                "ratingContentGroupId": "f62c693a-7519-4ffc-aa73-6cb7f27bd87c",
+                "localizedName": "Use of Tobacco",
+                "localizedDescription": "The consumption of tobacco products.",
+                "locale": "en-US",
+                "imageUrl": null,
+                "position": 30
+              },
+              {
+                "ratingContentId": "bf58099d-f820-4ba7-a37b-5c42713ab7fd",
+                "ratingContentGroupId": "f62c693a-7519-4ffc-aa73-6cb7f27bd87c",
+                "localizedName": "Violence",
+                "localizedDescription": "Scenes involving aggressive conflict. May contain bloodless dismemberment.",
+                "locale": "en-US",
+                "imageUrl": null,
+                "position": 48
+              }
+            ]
+          },
+          {
+            "ratingContentGroupId": "8c00bec6-430c-4f93-9115-b9c7497856af",
+            "position": 2,
+            "ratingContents": [
+              {
+                "ratingContentId": "07170f29-f89b-4d4c-affc-8eab27bc98f0",
+                "ratingContentGroupId": "8c00bec6-430c-4f93-9115-b9c7497856af",
+                "localizedName": "Users Interact",
+                "localizedDescription": "Indicates possible exposure to unfiltered/uncensored user-generated content, including user-to-user communications and media sharing via social media and networks.",
+                "locale": "en-US",
+                "imageUrl": null,
+                "position": 3
+              },
+              {
+                "ratingContentId": "c0c7f9d9-2857-43d9-b0b8-c5dc2d8b2608",
+                "ratingContentGroupId": "8c00bec6-430c-4f93-9115-b9c7497856af",
+                "localizedName": "In-Game Purchases (Includes Random Items)",
+                "localizedDescription": "Contains in-game offers to purchase digital goods or premiums with real world currency, including but not limited to bonus levels, skins, surprise items (such as item packs, loot boxes, mystery awards), music, virtual coins and other forms of in-game currency, subscriptions, season passes and upgrades (e.g., to disable ads)",
+                "locale": "en-US",
+                "imageUrl": "",
+                "position": 5
+              }
+            ]
+          }
+        ],
+        "blockContent": false,
+        "age": 13,
+        "blockGameplay": false,
+        "provisional": false,
+        "contentAgeGate": false,
+        "purchaseAgeGate": false,
+        "ageRatingSpecificationUrl": null
+      }
+    ],
+    "additional": [
+      {
+        "title": "Esrb: USA, MEX, CAN",
+        "idSelector": "esrb",
+        "classes": "",
+        "content": [
+          {
+            "title": "Esrb.Jpg",
+            "type": "Plain",
+            "text": "",
+            "url": "http://www.esrb.org/confirm/blizzard-confirmation.aspx",
+            "media": "https://blz-contentstack-images.akamaized.net/v3/assets/blt72f16e066f85e164/bltda241a8277f6f927/612d1a5d19b5613c6defce41/esrb.webp",
+            "alt": "PRIVACY CERTIFIED TRADEMARK ESRB"
+          }
+        ]
+      }
+    ]
+  },
+  "userCountry": "USA"
+}
