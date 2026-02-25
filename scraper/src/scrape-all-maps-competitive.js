@@ -47,36 +47,10 @@ function calculateDataHash(heroes) {
   return crypto.createHash('sha256').update(dataString).digest('hex');
 }
 
-async function fetchMapData(map) {
-  const url = `${API_BASE}?input=PC&map=${map}&region=Americas&role=All&rq=1&tier=All`;
-  
-  console.log(`Fetching: ${map}`);
-  
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-    
-    const data = await response.json();
-    
-    if (!data.rates || !Array.isArray(data.rates)) {
-      console.log(`  ⚠️  No rates data returned`);
-      return null;
-    }
-    
-    console.log(`  ✓ Got ${data.rates.length} heroes`);
-    return data.rates;
-    
-  } catch (error) {
-    console.error(`  ✗ Error: ${error.message}`);
-    return null;
-  }
-}
 
 async function scrapeAllMaps() {
-  console.log('🗺️  Scraping Competitive PC Americas All for ALL 26 Maps\n');
-  console.log(`Total maps: ${ALL_MAPS.length}\n`);
+  console.log('🗺️  Scraping BOTH Competitive AND Quick Play for ALL 28 Maps\n');
+  console.log(`Total maps: ${ALL_MAPS.length} × 2 modes = ${ALL_MAPS.length * 2} snapshots\n`);
   
   const allSnapshots = [];
   const timestamp = new Date().toISOString();
@@ -84,43 +58,68 @@ async function scrapeAllMaps() {
   let successCount = 0;
   let failCount = 0;
   
-  for (const map of ALL_MAPS) {
-    const rates = await fetchMapData(map);
+  const MODES = ['competitive', 'quick-play'];
+  
+  for (const mode of MODES) {
+    console.log(`\n📊 Scraping ${mode.toUpperCase()} mode:\n`);
     
-    if (rates && rates.length > 0) {
-      const heroes = rates.map(hero => ({
-        hero: hero.id,
-        pick_rate: hero.cells.pickrate,
-        win_rate: hero.cells.winrate
-      }));
+    for (const map of ALL_MAPS) {
+      const url = `${API_BASE}?input=PC&map=${map}&mode=${mode}&region=Americas&role=All&rq=1&tier=All`;
       
-      const dataHash = calculateDataHash(heroes);
+      console.log(`Fetching: ${mode} / ${map}`);
       
-      const snapshot = {
-        id: `snapshot-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-        timestamp,
-        mode: 'competitive',
-        input: 'PC',
-        region: 'Americas',
-        tier: 'All',
-        map: map,
-        dataHash,
-        changeDetected: true,
-        heroes
-      };
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (!data.rates || !Array.isArray(data.rates)) {
+          console.log(`  ⚠️  No rates data returned`);
+          failCount++;
+          continue;
+        }
+        
+        console.log(`  ✓ Got ${data.rates.length} heroes`);
+        
+        const heroes = data.rates.map(hero => ({
+          hero: hero.id,
+          pick_rate: hero.cells.pickrate,
+          win_rate: hero.cells.winrate
+        }));
+        
+        const dataHash = calculateDataHash(heroes);
+        
+        const snapshot = {
+          id: `snapshot-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          timestamp,
+          mode: mode,
+          input: 'PC',
+          region: 'Americas',
+          tier: 'All',
+          map: map,
+          dataHash,
+          changeDetected: true,
+          heroes
+        };
+        
+        allSnapshots.push(snapshot);
+        successCount++;
+        
+        // Show top 3 for verification
+        const sorted = [...heroes].sort((a, b) => b.pick_rate - a.pick_rate);
+        console.log(`  Top 3: ${sorted.slice(0, 3).map(h => h.hero).join(', ')}`);
+        
+      } catch (error) {
+        console.error(`  ✗ Error: ${error.message}`);
+        failCount++;
+      }
       
-      allSnapshots.push(snapshot);
-      successCount++;
-      
-      // Show top 3 for verification
-      const sorted = [...heroes].sort((a, b) => b.pick_rate - a.pick_rate);
-      console.log(`  Top 3: ${sorted.slice(0, 3).map(h => h.hero).join(', ')}`);
-    } else {
-      failCount++;
+      // Rate limiting - wait 1 second between requests
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
-    
-    // Rate limiting - wait 1 second between requests
-    await new Promise(resolve => setTimeout(resolve, 1000));
   }
   
   console.log(`\n✅ Scraping complete!`);
